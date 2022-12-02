@@ -1,17 +1,27 @@
-import logo from "../assets/img/logo.png"
+import Footer from "./Footer";
+import Logo from "./Logo"
 import Perguntas from "./Perguntas";
+import styled from "styled-components";
 
-function App() {
+export default function App() {
+
   return (
-    <div className="screen-container">
-      <div className="logo-container">
-        <img src={logo} alt=""></img>
-        <h1>ZapRecall</h1>
-      </div>
-      <Perguntas/>
-      <div className="footer-concluidos">CONCLUÍDOS</div>
-    </div>
+    <ScreenContainer>
+      <Logo />
+      <Perguntas />
+      <Footer />
+    </ScreenContainer>
   );
 }
 
-export default App;
+const ScreenContainer = styled.div`
+  background-color: #FB6B6B;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
+  padding-bottom: 200px;
+`;
