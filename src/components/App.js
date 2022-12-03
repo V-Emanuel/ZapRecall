@@ -1,15 +1,24 @@
+import React, { useState } from "react";
 import Footer from "./Footer";
 import Logo from "./Logo"
 import Perguntas from "./Perguntas";
 import styled from "styled-components";
 
-export default function App() {
 
+
+export default function App() {
+  const [cont, setCont] = useState(0);
   return (
     <ScreenContainer>
-      <Logo />
-      <Perguntas />
-      <Footer />
+      <Logo
+      />
+      <Perguntas 
+      cont={cont}
+      setCont={setCont}
+      />
+      <Footer 
+      cont={cont}
+      />
     </ScreenContainer>
   );
 }

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function Footer() {
+export default function Footer({cont}) {
     return (
         <FooterConcluidos>
-            CONCLUÍDOS
+           {cont}/8 CONCLUÍDOS
         </FooterConcluidos>
     );
 }

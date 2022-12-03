@@ -1,20 +1,20 @@
 
-import { useState } from "react"
+import  React, { useState } from "react"
 import styled from "styled-components"
 import seta_p from "../assets/img/seta_play.png"
 import seta_v from "../assets/img/seta_virar.png"
 import cards from "./Cards"
 
-export default function Perguntas() {
+export default function Perguntas(cont, setCont) {
 
 
     function Word(props) {
         const [showCard, setShowCard] = useState(true);
         const [showButtons, setShowButtons] = useState(false);
         const [setaVirar, setSetaVirar] = useState(true);
-        const [certo, setCerto] = useState(false);
-        const [quase, setQuase] = useState(false);
-        const [errado, setErrado] = useState(false);
+        const [line, setLine] = useState(false);
+        const [icon, setIcon] = useState(false);
+        const [cor, setCor] = useState("#333333");
 
         function ShowQuestion() {
             setShowCard(false);
@@ -23,10 +23,25 @@ export default function Perguntas() {
             setShowButtons(true);
             setSetaVirar(false);
         }
+        function Right(){
+            setLine(true);
+            setShowCard(true);
+            setCor("#2FBE34")
+        }
+        function Almost(){
+            setLine(true);
+            setShowCard(true);
+            setCor("#FF922E");
+        }
+        function Wrong(){
+            setLine(true);
+            setShowCard(true);
+            setCor("#FF3030")
+        }
         let i = cards.indexOf(props.word);
         return (
             <>
-                <PerguntaFechada show={showCard}>
+                <PerguntaFechada show={showCard} line = {line} cor={cor}>
                     <p>Pergunta {i + 1}</p>
                     <img onClick={ShowQuestion} src={seta_p}></img>
                 </PerguntaFechada>
@@ -34,9 +49,9 @@ export default function Perguntas() {
                     <p>{setaVirar ? props.word.question : props.word.answer}</p>
                     <SetaVirar showSeta={setaVirar} onClick={ShowButtons} src={seta_v}></SetaVirar>
                     <ContainerBotoes showB={showButtons}>
-                        <NaoLembrei><p>Não Lembrei</p></NaoLembrei>
-                        <QuaseLembrei><p>Quase não lembrei</p></QuaseLembrei>
-                        <Zap><p>Zap!</p></Zap>
+                        <NaoLembrei onClick={Wrong}><p>Não Lembrei</p></NaoLembrei>
+                        <QuaseLembrei onClick={Almost}><p>Quase não lembrei</p></QuaseLembrei>
+                        <Zap onClick={Right}><p>Zap!</p></Zap>
                     </ContainerBotoes>
                 </PerguntaAberta>
             </>
@@ -66,7 +81,11 @@ const PerguntaFechada = styled.div`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    color: #333333;
+    color: ${props => props.cor};
+    text-decoration: ${props => props.line ? "line-through" : "none"};
+  }
+  img{
+    &:hover {cursor: pointer}
   }
 `;
 
@@ -102,6 +121,7 @@ const SetaVirar = styled.img`
   bottom: 10px;
   right: 10px;
   display: ${props => props.showSeta ? "flex" : "none"};
+  &:hover {cursor: pointer}
 `;
 const ContainerBotoes = styled.div`
 width: 290px;
@@ -119,6 +139,7 @@ width: 85px;
 height: 37px;
 background-color: #ff3030;
 border-radius: 5px;
+&:hover {cursor: pointer}
 p{
   font-family: 'Recursive';
   font-weight: 400;
@@ -140,6 +161,7 @@ border-radius: 5px;
 display: flex;
 align-items: center;
 text-align: center;
+&:hover {cursor: pointer}
 p{
     font-family: 'Recursive';
     font-weight: 400;
@@ -160,6 +182,7 @@ display: flex;
 align-items: center;
 text-align: center;
 justify-content: center;
+&:hover {cursor: pointer}
 p{
     font-family: 'Recursive';
     font-weight: 400;
