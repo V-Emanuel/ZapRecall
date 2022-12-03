@@ -6,31 +6,30 @@ import seta_v from "../assets/img/seta_virar.png"
 import cards from "./Cards"
 
 export default function Perguntas() {
-    const [showCard, setShowCard] = useState(true);
-    const [showQ, setShowQ] = useState(false);
-    const [showB, setShowB] = useState(false);
-    const [final, setFinal] = useState(false);
-    const [setaVirar, setSetaVirar] = useState(true);
-    function ShowQuestion(){
-        setShowCard(false);
-        setShowQ(true);
-    }
-    function ShowButtons(){
-        setShowB(true);
-        setSetaVirar(false);
-    }
+
+
     function Word(props) {
+        const [showCard, setShowCard] = useState(true);
+        const [showButtons, setShowButtons] = useState(false);
+        const [setaVirar, setSetaVirar] = useState(true);
+        function ShowQuestion() {
+            setShowCard(false);
+        }
+        function ShowButtons() {
+            setShowButtons(true);
+            setSetaVirar(false);
+        }
         let i = cards.indexOf(props.word);
         return (
             <>
-                <PerguntaFechada>
+                <PerguntaFechada show={showCard}>
                     <p>Pergunta {i + 1}</p>
                     <img onClick={ShowQuestion} src={seta_p}></img>
                 </PerguntaFechada>
-                <PerguntaAberta>
+                <PerguntaAberta show={!showCard}>
                     <p>{props.word.question}</p>
-                    <SetaVirar onClick={ShowButtons} src={seta_v}></SetaVirar>
-                    <ContainerBotoes>
+                    <SetaVirar showSeta={setaVirar} onClick={ShowButtons} src={seta_v}></SetaVirar>
+                    <ContainerBotoes showB={showButtons}>
                         <NaoLembrei><p>Não Lembrei</p></NaoLembrei>
                         <QuaseLembrei><p>Quase não lembrei</p></QuaseLembrei>
                         <Zap><p>Zap!</p></Zap>
@@ -54,7 +53,7 @@ const PerguntaFechada = styled.div`
     padding: 15px;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
-    display: flex;
+    display: ${props => props.show ? "flex" : "none"};
     align-items: center;
     justify-content: space-between;
   p {
@@ -82,7 +81,7 @@ width: 300px;
   line-height: 22px;
   color: #333333;
   position: relative;
-  display: flex;
+  display: ${props => props.show ? "flex" : "none"};
   flex-direction: column;
   justify-content: space-between;
   p {
@@ -98,10 +97,11 @@ const SetaVirar = styled.img`
   position: absolute;
   bottom: 10px;
   right: 10px;
+  display: ${props => props.showSeta ? "flex" : "none"};
 `;
 const ContainerBotoes = styled.div`
-width: 270px;
-display: flex;
+width: 290px;
+display: ${props => props.showB ? "flex" : "none"};
 align-items: center;
 justify-content: space-between;
 text-align: center;
