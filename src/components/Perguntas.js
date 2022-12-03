@@ -1,4 +1,4 @@
-import React from "react"
+
 import { useState } from "react"
 import styled from "styled-components"
 import seta_p from "../assets/img/seta_play.png"
@@ -12,6 +12,10 @@ export default function Perguntas() {
         const [showCard, setShowCard] = useState(true);
         const [showButtons, setShowButtons] = useState(false);
         const [setaVirar, setSetaVirar] = useState(true);
+        const [certo, setCerto] = useState(false);
+        const [quase, setQuase] = useState(false);
+        const [errado, setErrado] = useState(false);
+
         function ShowQuestion() {
             setShowCard(false);
         }
@@ -26,8 +30,8 @@ export default function Perguntas() {
                     <p>Pergunta {i + 1}</p>
                     <img onClick={ShowQuestion} src={seta_p}></img>
                 </PerguntaFechada>
-                <PerguntaAberta show={!showCard}>
-                    <p>{props.word.question}</p>
+                <PerguntaAberta show={!showCard} seta = {setaVirar}>
+                    <p>{setaVirar ? props.word.question : props.word.answer}</p>
                     <SetaVirar showSeta={setaVirar} onClick={ShowButtons} src={seta_v}></SetaVirar>
                     <ContainerBotoes showB={showButtons}>
                         <NaoLembrei><p>Não Lembrei</p></NaoLembrei>
