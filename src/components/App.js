@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Footer from "./Footer";
 import Logo from "./Logo"
 import Perguntas from "./Perguntas";
+import Pergunta from "./Pergunta";
 import styled from "styled-components";
+import GlobalStyle from "./GlobalStyle"
 
 
 
