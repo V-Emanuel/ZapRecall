@@ -4,7 +4,7 @@ import styled from "styled-components"
 import seta_v from "../assets/img/seta_virar.png"
 import cards from "./Cards"
 
-export default function Perguntas({ cont, setCont }) {
+export default function Perguntas({cont, setCont}) {
     function Word(props) {
         const [showCard, setShowCard] = useState(true);
         const [showButtons, setShowButtons] = useState(false);
@@ -14,50 +14,42 @@ export default function Perguntas({ cont, setCont }) {
         const [icone, setIcone] = useState("play-outline");
         const [iconCor, setIconCor] = useState("#333333");
 
-        function ShowQuestion() {
-            setShowCard(false);
-        }
-        function ShowButtons() {
-            setShowButtons(true);
-            setSetaVirar(false);
-        }
         function Right() {
             setLine(true);
             setShowCard(true);
             setCor("#2FBE34");
             setIcone("checkmark-circle");
-            setIconCor("#2FBE34");
-            //setCont((cont) => cont + 1);
+            setIconCor("#2FBE34"); 
+            setCont((cont) => cont + 1)       
         }
         function Almost() {
             setLine(true);
             setShowCard(true);
             setCor("#FF922E");
-            setCont(cont);
             setIcone("help-circle");
             setIconCor("#FF922E");
-            //setCont((cont) => cont + 1);
+            setCont((cont) => cont + 1)
         }
         function Wrong() {
             setLine(true);
             setShowCard(true);
             setCor("#FF3030");
-            setCont(cont);
             setIcone("close-circle");
             setIconCor("#FF3030");
-            //setCont((cont) => cont + 1);
+            setCont((cont) => cont + 1)
+
         }
         let i = cards.indexOf(props.word);
         return (
             <>
                 <PerguntaFechada show={showCard} line={line} cor={cor} iconCor={iconCor} icone={icone}>
                     <p>Pergunta {i + 1}</p>
-                    <ion-icon onClick={ShowQuestion} name={icone}></ion-icon>
+                    <ion-icon onClick={() => setShowCard(false)} name={icone}></ion-icon>
                 </PerguntaFechada>
                 <PerguntaAberta show={!showCard} seta={setaVirar}>
                     <p>{setaVirar ? props.word.question : props.word.answer}</p>
-                    <SetaVirar showSeta={setaVirar} onClick={ShowButtons} src={seta_v}></SetaVirar>
-                    <ContainerBotoes showB={showButtons}>
+                    <SetaVirar showSeta={setaVirar} onClick={() => (setShowButtons(true), setSetaVirar(false))} src={seta_v}></SetaVirar>
+                    <ContainerBotoes showB={(showButtons)}>
                         <NaoLembrei onClick={Wrong}><p>Não Lembrei</p></NaoLembrei>
                         <QuaseLembrei onClick={Almost}><p>Quase não lembrei</p></QuaseLembrei>
                         <Zap onClick={Right}><p>Zap!</p></Zap>
