@@ -1,20 +1,19 @@
 
 import  React, { useState } from "react"
 import styled from "styled-components"
-import seta_p from "../assets/img/seta_play.png"
 import seta_v from "../assets/img/seta_virar.png"
 import cards from "./Cards"
 
-export default function Perguntas(cont, setCont) {
-
-
+export default function Perguntas(setCont) {
+    let cont = 0;
     function Word(props) {
         const [showCard, setShowCard] = useState(true);
         const [showButtons, setShowButtons] = useState(false);
         const [setaVirar, setSetaVirar] = useState(true);
         const [line, setLine] = useState(false);
-        const [icon, setIcon] = useState(false);
         const [cor, setCor] = useState("#333333");
+        const [icone, setIcone] = useState("play-outline");
+        const [iconCor, setIconCor] = useState("#333333");
 
         function ShowQuestion() {
             setShowCard(false);
@@ -24,26 +23,36 @@ export default function Perguntas(cont, setCont) {
             setSetaVirar(false);
         }
         function Right(){
+            cont = cont + 1;
             setLine(true);
             setShowCard(true);
-            setCor("#2FBE34")
+            setCor("#2FBE34");
+            setCont(cont);
+            setIcone("checkmark-circle");
+            setIconCor("#2FBE34");
         }
         function Almost(){
             setLine(true);
             setShowCard(true);
             setCor("#FF922E");
+            setCont(cont);
+            setIcone("help-circle");
+            setIconCor("#FF922E");
         }
         function Wrong(){
             setLine(true);
             setShowCard(true);
-            setCor("#FF3030")
+            setCor("#FF3030");
+            setCont(cont);
+            setIcone("close-circle");
+            setIconCor("#FF3030");
         }
         let i = cards.indexOf(props.word);
         return (
             <>
-                <PerguntaFechada show={showCard} line = {line} cor={cor}>
+                <PerguntaFechada show={showCard} line = {line} cor={cor} iconCor = {iconCor}>
                     <p>Pergunta {i + 1}</p>
-                    <img onClick={ShowQuestion} src={seta_p}></img>
+                    <ion-icon onClick={ShowQuestion} name={icone}></ion-icon>
                 </PerguntaFechada>
                 <PerguntaAberta show={!showCard} seta = {setaVirar}>
                     <p>{setaVirar ? props.word.question : props.word.answer}</p>
@@ -84,7 +93,9 @@ const PerguntaFechada = styled.div`
     color: ${props => props.cor};
     text-decoration: ${props => props.line ? "line-through" : "none"};
   }
-  img{
+  ion-icon{
+    color: ${props => props.iconCor};
+    font-size: 35px;
     &:hover {cursor: pointer}
   }
 `;

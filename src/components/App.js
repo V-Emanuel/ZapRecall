@@ -13,7 +13,6 @@ export default function App() {
       <Logo
       />
       <Perguntas 
-      cont={cont}
       setCont={setCont}
       />
       <Footer 
