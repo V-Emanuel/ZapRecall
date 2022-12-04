@@ -1,65 +1,70 @@
 
 import React, { useState } from "react"
 import styled from "styled-components"
+import seta_p from '../assets/img/seta_play.png'
 import seta_v from "../assets/img/seta_virar.png"
 import cards from "./Cards";
 
 
- export default function Pergunta(props) {
-        const {cont, setCont} = props;
-        const [showCard, setShowCard] = useState(true);
-        const [showButtons, setShowButtons] = useState(false);
-        const [setaVirar, setSetaVirar] = useState(true);
-        const [line, setLine] = useState(false);
-        const [cor, setCor] = useState("#333333");
-        const [icone, setIcone] = useState("play-outline");
-        const [iconCor, setIconCor] = useState("#333333");
+export default function Pergunta(props) {
+  const [data, setData] = useState("");
+  const { cont, setCont } = props;
+  const [showCard, setShowCard] = useState(true);
+  const [showButtons, setShowButtons] = useState(false);
+  const [setaVirar, setSetaVirar] = useState(true);
+  const [line, setLine] = useState(false);
+  const [cor, setCor] = useState("#333333");
+  const [icone, setIcone] = useState("");
+  const [iconCor, setIconCor] = useState("#333333");
 
-        function Right() {
-            setLine(true);
-            setShowCard(true);
-            setCor("#2FBE34");
-            setIcone("checkmark-circle");
-            setIconCor("#2FBE34"); 
-            setCont((cont) => cont + 1)       
-        }
-        function Almost() {
-            setLine(true);
-            setShowCard(true);
-            setCor("#FF922E");
-            setIcone("help-circle");
-            setIconCor("#FF922E");
-            setCont((cont) => cont + 1)
-        }
-        function Wrong() {
-            setLine(true);
-            setShowCard(true);
-            setCor("#FF3030");
-            setIcone("close-circle");
-            setIconCor("#FF3030");
-            setCont((cont) => cont + 1)
+  function Right() {
+    setLine(true);
+    setShowCard(true);
+    setCor("#2FBE34");
+    setIcone("checkmark-circle");
+    setIconCor("#2FBE34");
+    setCont((cont) => cont + 1);
+    setData("zap-icon");
+  }
+  function Almost() {
+    setLine(true);
+    setShowCard(true);
+    setCor("#FF922E");
+    setIcone("help-circle");
+    setIconCor("#FF922E");
+    setCont((cont) => cont + 1);
+    setData("partial-icon");
+  }
+  function Wrong() {
+    setLine(true);
+    setShowCard(true);
+    setCor("#FF3030");
+    setIcone("close-circle");
+    setIconCor("#FF3030");
+    setCont((cont) => cont + 1);
+    setData("no-icon");
+  }
+  let i = cards.indexOf(props.word);
+  return (
+    <>
+      <PerguntaFechada data-test="flashcard" show={showCard} line={line} cor={cor} iconCor={iconCor} icone={icone}>
+        <p data-test="flashcard-test">Pergunta {i + 1}</p>
+        <img data-test="play-btn" onClick={() => setShowCard(false)} src={seta_p}></img>
+        <ion-icon data-test={data} name={icone}></ion-icon>
+      </PerguntaFechada>
+      <PerguntaAberta show={!showCard} seta={setaVirar}>
+        <p data-test="flashcard-test" >{setaVirar ? props.word.question : props.word.answer}</p>
+        <SetaVirar data-test="turn-btn" showSeta={setaVirar} onClick={() => (setShowButtons(true), setSetaVirar(false))} src={seta_v}></SetaVirar>
+        <ContainerBotoes showB={(showButtons)}>
+          <NaoLembrei data-test="no-btn" onClick={Wrong}><p>Não Lembrei</p></NaoLembrei>
+          <QuaseLembrei data-test="partial-btn" onClick={Almost}><p>Quase não lembrei</p></QuaseLembrei>
+          <Zap data-test="zap-btn" onClick={Right}><p>Zap!</p></Zap>
+        </ContainerBotoes>
+      </PerguntaAberta>
+    </>
+  );
+}
 
-        }
-        let i = cards.indexOf(props.word);
-        return (
-            <>
-                <PerguntaFechada show={showCard} line={line} cor={cor} iconCor={iconCor} icone={icone}>
-                    <p>Pergunta {i + 1}</p>
-                    <ion-icon onClick={() => setShowCard(false)} name={icone}></ion-icon>
-                </PerguntaFechada>
-                <PerguntaAberta show={!showCard} seta={setaVirar}>
-                    <p>{setaVirar ? props.word.question : props.word.answer}</p>
-                    <SetaVirar showSeta={setaVirar} onClick={() => (setShowButtons(true), setSetaVirar(false))} src={seta_v}></SetaVirar>
-                    <ContainerBotoes showB={(showButtons)}>
-                        <NaoLembrei onClick={Wrong}><p>Não Lembrei</p></NaoLembrei>
-                        <QuaseLembrei onClick={Almost}><p>Quase não lembrei</p></QuaseLembrei>
-                        <Zap onClick={Right}><p>Zap!</p></Zap>
-                    </ContainerBotoes>
-                </PerguntaAberta>
-            </>
-        );
-    }
-    
 const PerguntaFechada = styled.div`
     width: 300px;
     height: 35px;
@@ -80,10 +85,14 @@ const PerguntaFechada = styled.div`
     color: ${props => props.cor};
     text-decoration: ${props => props.line ? "line-through" : "none"};
   }
+  img{
+    &:hover {cursor: pointer}
+    display: ${props => props.line ? "none" : "flex"};
+  }
   ion-icon{
+    display: ${props => props.line ? "flex" : "none"};
     color: ${props => props.iconCor};
     font-size: 35px;
-    &:hover {cursor: pointer}
   }
 `;
 

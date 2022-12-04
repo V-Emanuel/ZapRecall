@@ -3,7 +3,7 @@ import cards from "./Cards";
 
 export default function Footer({cont}) {
     return (
-        <FooterConcluidos>
+        <FooterConcluidos data-test="footer">
            {cont}/{cards.length} CONCLUÍDOS
         </FooterConcluidos>
     );
