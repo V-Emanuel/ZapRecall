@@ -1,11 +1,10 @@
 
-import  React, { useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import seta_v from "../assets/img/seta_virar.png"
 import cards from "./Cards"
 
-export default function Perguntas(setCont) {
-    let cont = 0;
+export default function Perguntas({ cont, setCont }) {
     function Word(props) {
         const [showCard, setShowCard] = useState(true);
         const [showButtons, setShowButtons] = useState(false);
@@ -22,39 +21,40 @@ export default function Perguntas(setCont) {
             setShowButtons(true);
             setSetaVirar(false);
         }
-        function Right(){
-            cont = cont + 1;
+        function Right() {
             setLine(true);
             setShowCard(true);
             setCor("#2FBE34");
-            setCont(cont);
             setIcone("checkmark-circle");
             setIconCor("#2FBE34");
+            //setCont((cont) => cont + 1);
         }
-        function Almost(){
+        function Almost() {
             setLine(true);
             setShowCard(true);
             setCor("#FF922E");
             setCont(cont);
             setIcone("help-circle");
             setIconCor("#FF922E");
+            //setCont((cont) => cont + 1);
         }
-        function Wrong(){
+        function Wrong() {
             setLine(true);
             setShowCard(true);
             setCor("#FF3030");
             setCont(cont);
             setIcone("close-circle");
             setIconCor("#FF3030");
+            //setCont((cont) => cont + 1);
         }
         let i = cards.indexOf(props.word);
         return (
             <>
-                <PerguntaFechada show={showCard} line = {line} cor={cor} iconCor = {iconCor}>
+                <PerguntaFechada show={showCard} line={line} cor={cor} iconCor={iconCor} icone={icone}>
                     <p>Pergunta {i + 1}</p>
                     <ion-icon onClick={ShowQuestion} name={icone}></ion-icon>
                 </PerguntaFechada>
-                <PerguntaAberta show={!showCard} seta = {setaVirar}>
+                <PerguntaAberta show={!showCard} seta={setaVirar}>
                     <p>{setaVirar ? props.word.question : props.word.answer}</p>
                     <SetaVirar showSeta={setaVirar} onClick={ShowButtons} src={seta_v}></SetaVirar>
                     <ContainerBotoes showB={showButtons}>

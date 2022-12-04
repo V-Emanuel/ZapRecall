@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import cards from "./Cards";
 
 export default function Footer({cont}) {
     return (
         <FooterConcluidos>
-           {cont}/8 CONCLUÍDOS
+           {cont}/{cards.length} CONCLUÍDOS
         </FooterConcluidos>
     );
 }
